@@ -9,7 +9,7 @@
 echo -e "\e[1;36m=========== PASSWORD GENERATOR ==============\e[0m"
 read -rp 'Do you want to generate a human-friendly password (composed of dictionary words for easier memorization)? It may be less secure. (n/y) ' IS_WORD_COMPOSED
 read -rp 'What is the length of your password? (must be greater than 5). ' PASSWORD_LENGTH
-if [ "$PASSWORD_LENGTH" -lt 6 ]; then
+if [ "$PASSWORD_LENGTH" -lt 6 ] || [ -z "$PASSWORD_LENGTH" ]; then
   echo "Error: Password length must be greater than 5" >&2
   exit 1
 fi
@@ -28,8 +28,8 @@ function dictionaryPassword() {
   DICTIONARY_LENGTH=$(echo "$DICTIONARY" | wc --words)
   
   for (( i=1; i <= "$PASSWORD_LENGTH"; i++ )); do
-    RANDOM_WORD_PASSWORD=$(shuf -i 0-"$DICTIONARY_LENGTH" -n1)
-    CURRENT_RANDOM_WORD=$(echo "$DICTIONARY" | awk "{print \$$RANDOM_WORD_PASSWORD}")
+    RANDOM_DICTIONARY_WORD_INDEX=$(shuf -i 0-"$DICTIONARY_LENGTH" -n1)
+    CURRENT_RANDOM_WORD=$(echo "$DICTIONARY" | awk "{print \$$RANDOM_DICTIONARY_WORD_INDEX}")
     if [ "$DICTIONARY_PASSWORD" = "" ]; then
       DICTIONARY_PASSWORD="$CURRENT_RANDOM_WORD"
     else
@@ -38,7 +38,7 @@ function dictionaryPassword() {
   done
 
   if [ "$HAS_LEET_SPEAK" = "y" ]; then
-    DICTIONARY_PASSWORD=$(tr 'aeos' '4305' <<< "$DICTIONARY_PASSWORD")
+    DICTIONARY_PASSWORD=$(tr 'aeos' '430$' <<< "$DICTIONARY_PASSWORD")
   fi
 
   echo -e "\nYour password is: \e[1;33m$DICTIONARY_PASSWORD\e[0m"
