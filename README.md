@@ -38,7 +38,6 @@ A powerful and customizable password generator script written in Bash. Create st
 
 ## 📦 Installation
 
-1. Clone the repository:
 ```bash
 #clone repository
 git clone https://github.com/LucasFelipeTimoteo/strong-password-generator.git
