@@ -43,10 +43,10 @@ A powerful and customizable password generator script written in Bash. Create st
 git clone https://github.com/LucasFelipeTimoteo/strong-password-generator.git
 
 #Navigate to the project directory:
-cd password-generator
+cd strong-password-generator-main
 
 #Make the script executable:
-chmod +x password-generator.sh
+chmod +x generator.sh
 
 #Run the script:
-./password-generator.sh
+./generator.sh
